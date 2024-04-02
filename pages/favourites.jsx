@@ -2,12 +2,15 @@ import { useAtom } from "jotai";
 import { favouriteAtom } from "@/store";
 import { Row,Col, Card } from "react-bootstrap";
 import ArtworkCard from "@/components/ArtworkCard";
+import { getFavourites } from "@/lib/userData";
 const Favourites = () => {
-  const [favouriteList] = useAtom(favouriteAtom);
+  const [favouritesList, setfavouritesList] = useAtom(favouriteAtom);
+   getFavourites().then((data) => { setfavouritesList(data); });
+  if(!favouritesList) return null;
   return (
     <Row className="gy-4">
-      {favouriteList.length > 0 ? (
-        favouriteList.map((favObjId) => (
+      {favouritesList.length > 0 ? (
+        favouritesList.map((favObjId) => (
           <Col lg={3} key={favObjId}>
             <ArtworkCard objectID={favObjId} />
           </Col>

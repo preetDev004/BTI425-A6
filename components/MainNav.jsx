@@ -13,17 +13,20 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { seatcHistoryAtom } from "@/store";
 
+import { addToHistory } from "@/lib/userData";
+
 function MainNav() {
   const [searchField, setSearchField] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchHistory, setSearchHistory] = useAtom(seatcHistoryAtom);
   const router = useRouter();
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     setIsExpanded(false);
     if (searchField) {
       const queryString = `title=true&q=${searchField}`;
-      setSearchHistory((current) => [...current, queryString ]);
+      // setSearchHistory((current) => [...current, queryString ]);
+      setSearchHistory(await addToHistory(`title=true&q=${searchField}`));
       router.push(`/artwork?${queryString}`);
     }
   };

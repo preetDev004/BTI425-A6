@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { seatcHistoryAtom } from "@/store";
 
+import { addToHistory } from "@/lib/userData";
+
 const AdvancedSearch = () => {
   const router = useRouter();
   const [searchHistory, setSearchHistory] = useAtom(seatcHistoryAtom);
@@ -22,7 +24,7 @@ const AdvancedSearch = () => {
       q: "",
     },
   });
-  const submitForm = (data) => {
+  const submitForm = async(data) => {
     let queryString = "";
 
     queryString += `${data.searchBy}=true`;
@@ -41,7 +43,8 @@ const AdvancedSearch = () => {
     if (data.q) {
       queryString += `&q=${data.q}`;
     }
-    setSearchHistory((current)=> [...current, queryString ])
+    // setSearchHistory((current)=> [...current, queryString ])
+    setSearchHistory(await addToHistory(queryString))
 
     router.push(`/artwork?${queryString}`);
   };

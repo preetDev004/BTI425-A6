@@ -10,7 +10,6 @@ export default function Register(props) {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-
   async function handleSubmit(e) {
     e.preventDefault();
     try {

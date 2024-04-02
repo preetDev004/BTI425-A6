@@ -3,8 +3,10 @@ import Card from "react-bootstrap/Card";
 import Error from "next/error";
 import { useAtom } from "jotai";
 import { favouriteAtom } from "@/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+
+import { addToFavourites, removeFromFavourites } from "@/lib/userData";
 
 const ArtworkCardDetail = ({ objectID }) => {
   const { data, error } = useSWR(
@@ -12,19 +14,25 @@ const ArtworkCardDetail = ({ objectID }) => {
       ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`
       : null
   );
-  const [favouriteList, setFavouriteList] = useAtom(favouriteAtom);
-  const [showAdded, setShowAdded] = useState(favouriteList.includes(objectID));
+  const [favouritesList, setfavouritesList] = useAtom(favouriteAtom);
+  const [showAdded, setShowAdded] = useState(false);
 
-  const favouriteClicked = () => {
+  useEffect(() => {
+
+    // TODO: Remove the creation of the list variable and use the favouritesList directly.     
+
+    let list = Array.isArray(favouritesList) ? favouritesList : [];
+    setShowAdded(list && list?.includes(objectID));
+  }, [favouritesList]);
+
+  const favouriteClicked = async () => {
     if (showAdded) {
-      setFavouriteList((current) => current.filter((fav) => fav != objectID));
+      setfavouritesList(await removeFromFavourites(objectID));
       setShowAdded(false);
     } else {
-      setFavouriteList((current) => [...current, objectID]);
+      setfavouritesList(await addToFavourites(objectID));
       setShowAdded(true);
     }
-    console.log(favouriteList)
-  
   };
   return (
     <>
