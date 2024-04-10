@@ -3,13 +3,13 @@ import { Form } from "react-bootstrap";
 import { Row, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { seatcHistoryAtom } from "@/store";
+import { searchHistoryAtom } from "@/store";
 
 import { addToHistory } from "@/lib/userData";
 
 const AdvancedSearch = () => {
   const router = useRouter();
-  const [searchHistory, setSearchHistory] = useAtom(seatcHistoryAtom);
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
   const {
     register,
     handleSubmit,

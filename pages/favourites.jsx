@@ -3,10 +3,11 @@ import { favouriteAtom } from "@/store";
 import { Row,Col, Card } from "react-bootstrap";
 import ArtworkCard from "@/components/ArtworkCard";
 import { getFavourites } from "@/lib/userData";
+
 const Favourites = () => {
   const [favouritesList, setfavouritesList] = useAtom(favouriteAtom);
-   getFavourites().then((data) => { setfavouritesList(data); });
   if(!favouritesList) return null;
+    getFavourites().then((data) => { setfavouritesList(data); });
   return (
     <Row className="gy-4">
       {favouritesList.length > 0 ? (

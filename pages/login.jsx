@@ -1,9 +1,9 @@
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
-import { authenticateUser } from "@/lib/authenticate";
+import { authenticateUser, readToken } from "@/lib/authenticate";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { seatcHistoryAtom } from "@/store";
+import { favouriteAtom, searchHistoryAtom, tokenAtom } from "@/store";
 
 import { getFavourites, getHistory } from "@/lib/userData";
 
@@ -12,19 +12,22 @@ export default function Login(props) {
   const [user, setUser] = useState("");
   const [warning, setWarning] = useState("");
   const [password, setPassword] = useState("");
-  const [searchHistory, setSearchHistory] = useAtom(seatcHistoryAtom);
-  const [favouritesList, setFavouritesList] = useAtom(seatcHistoryAtom);
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
+  const [favouritesList, setFavouritesList] = useAtom(favouriteAtom);
+  const [token, setToken] = useAtom(tokenAtom);
 
   async function updateAtoms() {
-    setFavouritesList(await getFavourites());
     setSearchHistory(await getHistory());
+    setFavouritesList(await getFavourites());
+    setToken(readToken());
   }
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       await authenticateUser(user, password);
       await updateAtoms();
-      router.push("/favourites");
+
+      router.push("/");
     } catch (err) {
       setWarning(err.message);
     }
