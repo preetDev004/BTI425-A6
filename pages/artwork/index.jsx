@@ -1,4 +1,4 @@
-import validObjectIDList from "@/data/validObjectIDList";
+import validObjectIDList from '../../public/data/validObjectIDList.json';
 import ArtworkCard from "@/components/ArtworkCard";
 import Error from "next/error";
 import { useRouter } from "next/router";
