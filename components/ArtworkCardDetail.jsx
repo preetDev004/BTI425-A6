@@ -18,10 +18,9 @@ const ArtworkCardDetail = ({ objectID }) => {
   const [showAdded, setShowAdded] = useState(false);
 
   useEffect(() => {
-
     // TODO: Remove the creation of the list variable and use the favouritesList directly.     
     let list = Array.isArray(favouritesList) ? favouritesList : [];
-    setShowAdded(list && list?.includes(objectID));
+    setShowAdded(list?.includes(objectID));
   }, [favouritesList]);
 
   const favouriteClicked = async () => {
@@ -29,8 +28,8 @@ const ArtworkCardDetail = ({ objectID }) => {
       setfavouritesList(await removeFromFavourites(objectID));
       setShowAdded(false);
     } else {
-      setfavouritesList(await addToFavourites(objectID));
       setShowAdded(true);
+      setfavouritesList(await addToFavourites(objectID));
     }
   };
   return (
@@ -86,7 +85,7 @@ const ArtworkCardDetail = ({ objectID }) => {
               </Card.Text>
               <Button
                 variant={`${showAdded ? "dark" : "outline-dark"}`}
-                onClick={async() => await favouriteClicked()}
+                onClick={favouriteClicked}
               >
                 + Favourite {showAdded ? " (added)" : ""}
               </Button>
