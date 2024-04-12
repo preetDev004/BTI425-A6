@@ -9,6 +9,7 @@ import useSWR from "swr";
 
 const PER_PAGE = 12;
 
+
 const index = () => {
   const [artworkList, setArtworkList] = useState();
   const [page, setPage] = useState(1);
