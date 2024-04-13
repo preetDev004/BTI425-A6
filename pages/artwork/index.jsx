@@ -1,14 +1,12 @@
-
-import validObjectIDList from '@/public/data/validObjectIDList.json';
 import ArtworkCard from "@/components/ArtworkCard";
 import Error from "next/error";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Row, Col, Pagination, Card } from "react-bootstrap";
 import useSWR from "swr";
+import validObjectIDList from '@/public/data/validObjectIDList.json';
 
 const PER_PAGE = 12;
-
 
 const index = () => {
   const [artworkList, setArtworkList] = useState();
