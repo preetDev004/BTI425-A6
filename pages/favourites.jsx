@@ -1,13 +1,18 @@
 import { useAtom } from "jotai";
 import { favouriteAtom } from "@/store";
-import { Row,Col, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import ArtworkCard from "@/components/ArtworkCard";
 import { getFavourites } from "@/lib/userData";
+import { useEffect } from "react";
 
 const Favourites = () => {
   const [favouritesList, setfavouritesList] = useAtom(favouriteAtom);
-  if(!favouritesList) return null;
-    getFavourites().then((data) => { setfavouritesList(data); });
+  if (!favouritesList) return null;
+  useEffect(() => {
+    getFavourites().then((data) => {
+      setfavouritesList(data);
+    });
+  },[]);
   return (
     <Row className="gy-4">
       {favouritesList.length > 0 ? (
